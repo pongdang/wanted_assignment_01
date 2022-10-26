@@ -47,7 +47,7 @@ export function TodoForm({ invalidate }) {
 
 const Form = styled.form`
   display: grid;
-  grid-template-columns: 1fr 60px;
+  grid-template-columns: 1fr 100px;
   gap: 0px 10px;
 `;
 
@@ -56,8 +56,9 @@ const Input = styled.input`
 `;
 
 const SubmitButton = styled(Button)`
-  padding: 8px 0;
+  padding: 10px 0;
   border-radius: 12px;
+  font-size: 1.6rem;
 
   &:disabled {
     background-color: #c1c1c199;
