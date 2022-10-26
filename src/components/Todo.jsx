@@ -6,12 +6,14 @@ import { Button } from './Button';
 export function Todo({ id, isCompleted, todo: content, updateTodo, removeTodo, checkComplete }) {
   const [isModify, setIsModify] = useState(false);
 
-  const { value, onChange, errorMessage } = useFormField({
+  const { value, onChange, errorMessage, setValue } = useFormField({
     initialValue: content,
     validators: [{ ok: value => value !== '', message: '빈 칸으로 수정할 수는 없어요' }],
   });
 
-  const handleUpdateTodo = async () => {
+  const handleUpdateTodo = async e => {
+    e.preventDefault();
+
     if (errorMessage != null) {
       return;
     }
@@ -42,7 +44,14 @@ export function Todo({ id, isCompleted, todo: content, updateTodo, removeTodo, c
         />
         <span>{content}</span>
       </Label>
-      <TodoButton onClick={() => setIsModify(true)}>수정</TodoButton>
+      <TodoButton
+        onClick={() => {
+          setIsModify(true);
+          setValue(content);
+        }}
+      >
+        수정
+      </TodoButton>
       <TodoButton onClick={() => removeTodo(id)}>삭제</TodoButton>
     </>
   );
