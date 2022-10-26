@@ -1,5 +1,28 @@
+import { Suspense } from 'react';
+import { Router } from './Router';
+import { ErrorBoundary, ErrorAlert } from './components';
+import { TokenContextProvider } from './contexts/TokenContext';
+import './App.css';
+
+function RenderFallback({ error, children, reset }) {
+  return (
+    <>
+      <ErrorAlert errorMessage={error.message} reset={reset} />
+      {children}
+    </>
+  );
+}
+
 function App() {
-  return <div className="App"></div>;
+  return (
+    <ErrorBoundary renderFallback={RenderFallback}>
+      <Suspense fallback={<h1>loading...</h1>}>
+        <TokenContextProvider>
+          <Router />
+        </TokenContextProvider>
+      </Suspense>
+    </ErrorBoundary>
+  );
 }
 
 export default App;
