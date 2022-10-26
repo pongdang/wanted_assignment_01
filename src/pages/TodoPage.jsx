@@ -13,15 +13,7 @@ export function TodoPage() {
 
   return (
     <Main>
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          margin-bottom: 40px;
-        `}
-      >
+      <div css={titleContainer}>
         <Title css={textCenter}>오늘의 할 일을 추가해보세요!</Title>
         <LogoutButton onClick={logout}>로그아웃</LogoutButton>
       </div>
@@ -44,11 +36,20 @@ const textCenter = css`
   flex-grow: 1;
 `;
 
+const titleContainer = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 40px;
+`;
+
 const LogoutButton = styled(Button)`
   width: 100px;
   height: 40px;
   font-weight: bold;
   font-size: 1.5rem;
+  background-color: #000;
 `;
 
 const Loading = styled.p`
