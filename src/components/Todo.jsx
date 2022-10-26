@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useFormField } from '../hooks/useFormField';
+import { isEmptyValue } from '../util/validation';
 import { Button } from './Button';
 
 export function Todo({ id, isCompleted, todo: content, updateTodo, removeTodo, checkComplete }) {
@@ -8,7 +9,7 @@ export function Todo({ id, isCompleted, todo: content, updateTodo, removeTodo, c
 
   const { value, onChange, errorMessage, setValue } = useFormField({
     initialValue: content,
-    validators: [{ ok: value => value !== '', message: '빈 칸으로 수정할 수는 없어요' }],
+    validators: [{ ok: value => isEmptyValue(value), message: '빈 칸으로 수정할 수는 없어요' }],
   });
 
   const handleUpdateTodo = async e => {
