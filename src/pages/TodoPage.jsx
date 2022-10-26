@@ -2,15 +2,29 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Suspense } from 'react';
-import { Title, TodoForm, TodoList } from '../components';
+import { Button, Title, TodoForm, TodoList } from '../components';
+import { useLogout } from '../hooks/user';
 import { useTodoList } from '../hooks/useTodoList';
 
 export function TodoPage() {
   const [todoList, invalidate] = useTodoList();
 
+  const { logout } = useLogout();
+
   return (
     <Main>
-      <Title css={textCenter}>오늘의 할 일을 추가해보세요!</Title>
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          margin-bottom: 40px;
+        `}
+      >
+        <Title css={textCenter}>오늘의 할 일을 추가해보세요!</Title>
+        <LogoutButton onClick={logout}>로그아웃</LogoutButton>
+      </div>
 
       <TodoForm invalidate={invalidate} />
 
@@ -21,12 +35,20 @@ export function TodoPage() {
   );
 }
 
-const textCenter = css`
-  text-align: center;
+const Main = styled.main`
+  padding: 20px;
 `;
 
-const Main = styled.main`
-  padding: 0 20px;
+const textCenter = css`
+  text-align: center;
+  flex-grow: 1;
+`;
+
+const LogoutButton = styled(Button)`
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 1.5rem;
 `;
 
 const Loading = styled.p`

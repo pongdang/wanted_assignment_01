@@ -7,12 +7,16 @@ const tokenStorage = {
   set: accessToken => {
     localStorage.setItem('access_token', accessToken);
   },
+  remove: () => {
+    localStorage.removeItem('access_token');
+  },
 };
 
 const TokenContext = createContext({
   isLogin: false,
   accessToken: '',
   setAccessToken: () => undefined,
+  clearAccessToken: () => undefined,
 });
 
 export const TokenContextProvider = ({ children }) => {
@@ -25,6 +29,11 @@ export const TokenContextProvider = ({ children }) => {
       tokenStorage.set(accessToken);
 
       setAccessToken(accessToken);
+    },
+    clearAccessToken: () => {
+      tokenStorage.remove();
+
+      setAccessToken('');
     },
   };
 
