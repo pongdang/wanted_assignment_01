@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
+const fetchClient = new Map();
+
 // @see https://dev.to/charlesstover/react-suspense-with-the-fetch-api-374j
-export function useFetch(_keys, promiseFn, client) {
+export function useFetch(_keys, promiseFn, client = fetchClient) {
   const [invalidateKey, setInvalidateKey] = useState();
   const keys = [..._keys, invalidateKey];
 
