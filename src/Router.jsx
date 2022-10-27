@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useTokenContext } from './contexts/TokenContext';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Redirect } from './components/Redirect';
+import { withAuthGuard } from './hocs/withAuthGuard';
 import { Join } from './pages/Join';
 import { Login } from './pages/Login';
 import { TodoPage } from './pages/TodoPage';
@@ -15,24 +16,4 @@ export function Router() {
       </Routes>
     </BrowserRouter>
   );
-}
-
-function Redirect({ to }) {
-  return <Navigate replace to={to} />;
-}
-
-// TODO: hocs 디렉토리로 이동하기
-function withAuthGuard(type, Component) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { isLogin } = useTokenContext();
-
-  if (!isLogin && type === 'member') {
-    return <Redirect to="/" />;
-  }
-
-  if (isLogin && type === 'guest') {
-    return <Redirect to="/todo" />;
-  }
-
-  return Component;
 }
