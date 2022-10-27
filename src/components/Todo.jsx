@@ -36,7 +36,7 @@ export function Todo({ id, isCompleted, todo: content, updateTodo, removeTodo, c
 
   return (
     <>
-      <Label htmlFor={`todo-${id}`}>
+      <Label htmlFor={`todo-${id}`} isCompleted={isCompleted}>
         <input
           id={`todo-${id}`}
           type="checkbox"
@@ -66,6 +66,7 @@ const Label = styled.label`
   justify-content: center;
 
   span {
+    text-decoration: ${props => (props.isCompleted ? 'line-through' : 'unset')};
     word-break: break-all;
     cursor: pointer;
   }

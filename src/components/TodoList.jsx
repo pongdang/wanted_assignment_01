@@ -45,7 +45,7 @@ export function TodoList({ todoList, invalidate }) {
   return (
     <List>
       {todoList.map(item => (
-        <ListItem key={item.id}>
+        <ListItem key={item.id} isCompleted={item.isCompleted}>
           <Todo
             {...item}
             updateTodo={updateTodo}
@@ -73,4 +73,6 @@ const ListItem = styled.li`
   border-radius: 20px;
   padding: 20px 10px;
   font-size: 1.6rem;
+  background-color: ${props => (props.isCompleted ? '#c1c1c199' : '#fff')};
+  border-color: ${props => (props.isCompleted ? '#c1c1c199' : '#dc602a')};
 `;
