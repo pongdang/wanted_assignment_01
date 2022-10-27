@@ -87,4 +87,129 @@ const {
 `validators` 배열 안에 value의 유효성을 검사하는 함수를 넣어, 그 함수의 결과에 따라 `errorMessage` 가 반환되도록 했습니다.
 또 유효성 관련 함수는 `validation` 파일 안에 선언하여 import 하여 사용할 수 있습니다.
 
-### 5. 유효성 검사를 통과했을 때만 관련 로직 실행
+## Best Pracitce 적용 사항
+
+### 1. 폴더구조
+
+```
+└─ src
+   ├─ api
+   ├─ components
+   ├─ contexts
+   ├─ hooks
+   ├─ pages
+   ├─ util
+   ├─ Router.jsx
+   ├─ App.css
+   ├─ App.js
+   └─ index.js
+```
+
+### 2. 로그인/회원가입 경로 구분
+
+- 로그인 : `/`
+- 회원가입 :`/signup`
+
+### 3. 이메일, 비밀번호 유효성 검사 기능
+
+```js
+// util/validation.js
+
+export function isEmptyValue(value) {
+  return value.trim() !== '';
+}
+
+export function isValidEmail(value) {
+  return value.includes('@');
+}
+
+export function isValidPassword(value) {
+  return value.length >= 8;
+}
+```
+
+- 유효성 관련 함수는 다른 파일로 분리하였습니다.
+
+### 4. 로그인 API 호출 성공시 /todo 이동
+
+ErrorBoundary 로 Error를 관리하여 따로 status 코드에 따라 이동시키는 로직을 작성하지 않아도 됩니다.
+
+```js
+await login(user);
+
+navigate('/todo');
+```
+
+### 5. JWT 토큰값 로컬 스토리지에 저장
+
+- context API로 로그인 상태와 accessToken을 관리합니다.
+- token을 get, set, remove 하는 함수를 만들어서 사용합니다.
+
+```js
+// contexts/TokenContext.js
+
+const tokenStorage = {
+  get: () => {
+    return localStorage.getItem('access_token') || '';
+  },
+  set: accessToken => {
+    localStorage.setItem('access_token', accessToken);
+  },
+  remove: () => {
+    localStorage.removeItem('access_token');
+  },
+};
+```
+
+### 6. 로그인 여부에 따른 리다이렉트 처리
+
+```js
+// components/Redirect.jsx
+
+import { Navigate } from 'react-router-dom';
+
+export function Redirect({ to }) {
+  return <Navigate replace to={to} />;
+}
+```
+
+- Redirect를 시켜주는 컴포넌트를 만들었습니다.
+
+```js
+// util/withAuthGuard.js
+
+import { Redirect } from '../components/Redirect';
+import { useTokenContext } from '../contexts/TokenContext';
+
+export function withAuthGuard(type, Component) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { isLogin } = useTokenContext();
+
+  // 로그인을 하지 않았는데 member만 접근할 수 있는 페이지에 접근하려 했을 때
+  if (!isLogin && type === 'member') {
+    // '/' 페이지로 리다이렉트
+    return <Redirect to="/" />;
+  }
+
+  // 로그인을 했는데 guest만 접근할 수 있는 페이지에 접근하려 했을 때
+  if (isLogin && type === 'guest') {
+    // '/todo' 페이지로 리다이렉트
+    return <Redirect to="/todo" />;
+  }
+
+  return Component;
+}
+```
+
+- 로그인 상태와 페이지 타입을 비교하여 올바르지 않은 url로 이동시 리다이렉트 되도록 했습니다.
+- 자세한 내용은 작업한 내용의 `1. Context API를 활용한 라우터 가드 처리 (with HoC)` 에서 확인할 수 있습니다.
+
+### 7. 투두 리스트 목록 (/todo 접속시)
+
+- `useFetch` hook을 사용하여 목록을 가져오도록 했습니다.
+- 자세하나 내용은 작업한 내용의 `2. Suspense 를 이용한 선언적인 비동기 함수 처리의 로딩처리` 에서 확인할 수 있습니다.
+
+### 그외 기능(옵션)
+
+- 에러 메시지를 모달창으로 확인할 수 있습니다.
+- 로그아웃 기능
