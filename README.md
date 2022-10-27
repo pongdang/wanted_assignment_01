@@ -68,20 +68,20 @@ open http://localhost:3000
 
 form을 검증하는 역할을 한 곳에 위임하고자 `useFormField` hook을 만들었습니다.
 
-```
-  const {
-    value: password,
-    onChange: onChangePassword,
-    errorMessage: passwordErrorMessage,
-  } = useFormField({
-    validators: [
-      { ok: value => isEmptyValue(value), message: '비밀번호를 입력해주세요' },
-      {
-        ok: value => isValidPassword(value),
-        message: '비밀번호는 8자 이상이어야 합니다',
-      },
-    ],
-  });
+```js
+const {
+  value: password,
+  onChange: onChangePassword,
+  errorMessage: passwordErrorMessage,
+} = useFormField({
+  validators: [
+    { ok: value => isEmptyValue(value), message: '비밀번호를 입력해주세요' },
+    {
+      ok: value => isValidPassword(value),
+      message: '비밀번호는 8자 이상이어야 합니다',
+    },
+  ],
+});
 ```
 
 `validators` 배열 안에 value의 유효성을 검사하는 함수를 넣어, 그 함수의 결과에 따라 `errorMessage` 가 반환되도록 했습니다.
