@@ -87,7 +87,7 @@ const {
 `validators` 배열 안에 value의 유효성을 검사하는 함수를 넣어, 그 함수의 결과에 따라 `errorMessage` 가 반환되도록 했습니다.
 또 유효성 관련 함수는 `validation` 파일 안에 선언하여 import 하여 사용할 수 있습니다.
 
-## Best Pracitce 적용 사항
+## Best Practice 적용 사항
 
 ### 1. 폴더구조
 
