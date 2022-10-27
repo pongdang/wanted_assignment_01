@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Redirect } from './components/Redirect';
-import { withAuthGuard } from './hocs/withAuthGuard';
+import { withAuthGuard } from './util/withAuthGuard';
 import { Join } from './pages/Join';
 import { Login } from './pages/Login';
 import { TodoPage } from './pages/TodoPage';
