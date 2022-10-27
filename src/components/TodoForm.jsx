@@ -12,6 +12,7 @@ export function TodoForm({ invalidate }) {
     onChange,
     errorMessage,
     clearValue,
+    setFirstRender,
   } = useFormField({
     validators: [
       {
@@ -32,6 +33,7 @@ export function TodoForm({ invalidate }) {
 
     invalidate();
     clearValue();
+    setFirstRender(true);
   };
 
   return (
@@ -53,6 +55,13 @@ const Form = styled.form`
 
 const Input = styled.input`
   padding-left: 8px;
+  border: 2px solid #dc602a;
+  border-radius: 5px;
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0px 0px 3px 2px #dc602a;
+  }
 `;
 
 const SubmitButton = styled(Button)`
