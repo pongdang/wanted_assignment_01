@@ -27,7 +27,7 @@
 ```
 git clone git@github.com:Wanted-07-team-9/wanted_assignment_01.git
 
-cd wanted_assignment_01
+cd wanted-pre-onboarding-frontend
 
 npm install
 
@@ -61,3 +61,30 @@ open http://localhost:3000
 - 그러나 이벤트 핸들러(onClick, onChange 등등)에서 발생한 error는 일반적으로 ErrorBoundary에서 catch 하지 못합니다.
 - 이벤트 핸들러에서 발생한 에러를 ErrorBoundary에서 catch 하도록 ErrorBoundary 클래스 컴포넌트를 개선하였습니다.
 - `unhandledrejection`/`error` 라는 이벤트를 이용해 이벤트 핸들러에서 발생한 error를 전파시켜 ErrorBoundary에서 `renderFallback` 을 이용해 UI 를 보여줄 수 있습니다.
+
+### 4. form의 유효성을 검사를 위한 `useFormField` hook을 구현
+
+이전에는 이메일, 비밀번호과 같은 여러 form의 유효성을 검사할 때 상태를 form 의 개수만큼 만들고 그에 따른 change 함수도 작성해야 했습니다.
+
+이러한 점을 개선하고 싶어 `useFormField` hook을 만들었습니다.
+
+```
+  const {
+    value: password,
+    onChange: onChangePassword,
+    errorMessage: passwordErrorMessage,
+  } = useFormField({
+    validators: [
+      { ok: value => isEmptyValue(value), message: '비밀번호를 입력해주세요' },
+      {
+        ok: value => isValidPassword(value),
+        message: '비밀번호는 8자 이상이어야 합니다',
+      },
+    ],
+  });
+```
+
+`validators` 배열 안에 value의 유효성을 검사하는 함수를 넣어, 그 함수의 결과에 따라 `errorMessage` 가 반환되도록 했습니다.
+또 유효성 관련 함수는 `validation` 파일 안에 선언하여 import 하여 사용할 수 있습니다.
+
+### 5. 유효성 검사를 통과했을 때만 관련 로직 실행
