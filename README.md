@@ -18,7 +18,23 @@
 
 💡 ci : CI관련 설정 수정에 대한 커밋
 
-## [✨ 배포링크](https://wanted-assignment-01.vercel.app)
+## 배포링크
+
+[✨ 배포링크](https://wanted-assignment-01.vercel.app)
+
+## 프로젝트의 실행 방법
+
+```
+git clone git@github.com:Wanted-07-team-9/wanted_assignment_01.git
+
+cd wanted_assignment_01
+
+npm install
+
+npm start
+
+open http://localhost:3000
+```
 
 ## 작업한 내용
 
