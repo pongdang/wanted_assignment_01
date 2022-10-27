@@ -66,7 +66,7 @@ open http://localhost:3000
 
 이전에는 이메일, 비밀번호과 같은 여러 form의 유효성을 검사할 때 상태를 form 의 개수만큼 만들고 그에 따른 change 함수도 작성해야 했습니다.
 
-이러한 점을 개선하고 싶어 `useFormField` hook을 만들었습니다.
+form을 검증하는 역할을 한 곳에 위임하고자 `useFormField` hook을 만들었습니다.
 
 ```
   const {
