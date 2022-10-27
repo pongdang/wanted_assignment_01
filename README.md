@@ -18,4 +18,4 @@
 
 💡 ci : CI관련 설정 수정에 대한 커밋
 
-## [✨ 배포링크]("https://wanted-assignment-01.vercel.app/")
+## [✨ 배포링크](https://wanted-assignment-01.vercel.app)
